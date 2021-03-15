@@ -1,0 +1,27 @@
+version: '3' # Version of docker-compose 
+services: # Defines the docker containers (services)
+  express-server: 
+    container_name: server
+    image: express-server
+    restart: always
+    ports:
+      - '3000:3000'
+    depends_on: 
+      - mongo
+    networks: 
+      - server-network
+  mongo:
+    container_name: database
+    image: mongo
+    ports: 
+      - '27017:27017'
+    networks: 
+      - server-network
+    volumes:
+      - mongo-data:/data/db
+networks: # Defines the network
+  server-network: # Name of network
+      driver: bridge
+volumes: # Defines the storage.
+  mongo-data: # Name of storage
+    driver: local
